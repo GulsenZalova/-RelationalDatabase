@@ -8,6 +8,4 @@ route.post("/",ordersController.add)
 route.delete("/:id",ordersController.delete)
 route.put("/:id",ordersController.update)
 
-
-
 module.exports=route

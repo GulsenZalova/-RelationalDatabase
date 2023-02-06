@@ -12,7 +12,11 @@ const adressRouter=require("./routers/adressRouter")
 const buyerRouter=require("./routers/buyerRouter")
 const categoryRouter=require("./routers/categoryRouter")
 const ordersRouter=require("./routers/ordersRouter")
+const userRouter=require("./routers/userRouter")
+
+
 mongoose.connect("mongodb+srv://gulshen:program2022@cluster0.fg9rwde.mongodb.net/RelationalDatabase")
+
     .then(res => {
         console.log('Connect!');
     })
@@ -23,31 +27,10 @@ app.use("/api/adresses",adressRouter)
 app.use("/api/buyer",buyerRouter)
 app.use("/api/category",categoryRouter)
 app.use("/api/orders",ordersRouter)
-// app.post("/token",(req,res)=>{
-//     if(req.body.email=="token.com" && req.body.password=="12345"){
-//       let token = jwt.sign({email:"token.com"},privateKey,{
-//           algorithm:"HS256",
-//           expiresIn:"5h"
-//         });
-//         res.send(token)
-//     }else{
-//         res.status(401).send("Problem")
-//     }
-// })
+app.use("/auth/login",userRouter)
 
 
-// app.get("/api/suppliers",function(req,res){
-//    let token=req.headers.authorization
-//    console.log(token)
-//    jwt.verify(token,privateKey,function(err,decode){
-//     if(err){
-//         res.status(401).send(err)
-//     }else{
-//         console.log(decode)
-//         res.send("OK")
-//     }
-//    })
-// })
+
 
 app.get('/', function (req, res) {
     res.json("Hello");
