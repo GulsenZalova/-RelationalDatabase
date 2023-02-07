@@ -3,7 +3,17 @@ const {ordersSchema}=require("../models/ordersSchema")
 
 const ordersController={
     getAll: (req,res)=>{
-        ordersSchema.find({isDeleted:false},(err,docs)=>{
+        const query=req.query
+        const limit=query.limit
+        const sorting=query.sort
+        let sort
+         if(sorting=="decs"){
+             sort=-1
+        }else if(sorting=="asc"){
+             sort=1
+        }
+        ordersSchema.find({isDeleted:false}).limit(limit).sort({buyerName:sort}).populate("categoryID").populate({path:"buyerID",populate:{path:"buyerAddress"}})
+        .exec((err,docs)=>{
             if(!err){
                 res.json(docs)
             }else{
@@ -13,7 +23,7 @@ const ordersController={
     },
     getById:(req,res)=>{
         const id=req.params.id
-        ordersSchema.findById(id,(err,docs)=>{
+        ordersSchema.findById(id).populate("categoryID").populate({path:"buyerID",populate:{path:"buyerAddress"}}).exec((err,docs)=>{
             if(!err){
                 res.json(docs)
             }else{

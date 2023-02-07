@@ -4,7 +4,16 @@ const {buyerSchema}=require("../models/buyerSchema")
 
 const buyerController={
     getAll: (req,res)=>{
-        buyerSchema.find({isDeleted:false},(err,docs)=>{
+        const query=req.query
+        const limit=query.limit
+        const sorting=query.sort
+        let sort
+         if(sorting=="decs"){
+             sort=-1
+        }else if(sorting=="asc"){
+             sort=1
+        }
+        buyerSchema.find({isDeleted:false}).limit(limit).sort({buyerName:sort}).populate("buyerAddress").exec((err,docs)=>{
             if(!err){
                 res.json(docs)
             }else{
@@ -14,7 +23,7 @@ const buyerController={
     },
     getById:(req,res)=>{
         const id=req.params.id
-        buyerSchema.findById(id,(err,docs)=>{
+        buyerSchema.findById(id).populate("buyerAddress").exec((err,docs)=>{
             if(!err){
                 res.json(docs)
             }else{

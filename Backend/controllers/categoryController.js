@@ -3,7 +3,16 @@ const {categorySchema}=require("../models/categorySchema")
 
 const categoryController={
     getAll: (req,res)=>{
-        categorySchema.find({isDeleted:false},(err,docs)=>{
+        const query=req.query
+        const limit=query.limit
+        const sorting=query.sort
+        let sort
+         if(sorting=="decs"){
+             sort=-1
+        }else if(sorting=="asc"){
+             sort=1
+        }
+        categorySchema.find({isDeleted:false}).limit(limit).sort({categoryName:sort}).exec((err,docs)=>{
             if(!err){
                 res.json(docs)
             }else{

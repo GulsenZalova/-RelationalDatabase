@@ -2,7 +2,16 @@ const {addressSchema}=require("../models/adressSchema")
 
 const adressController={
     getAll:(req,res)=>{
-        addressSchema.find({isDeleted:false},(err,docs)=>{
+       const query=req.query
+       const limit=query.limit
+       const sorting=query.sort
+       let sort
+        if(sorting=="decs"){
+            sort=-1
+       }else if(sorting=="asc"){
+            sort=1
+       }
+        addressSchema.find({isDeleted:false}).limit(limit).sort({streetName:sort}).exec((err,docs)=>{
             if(!err){
                 res.json(docs)
             }else{

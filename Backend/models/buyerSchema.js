@@ -15,7 +15,10 @@ const schema = new Schema({
         type:"ObjectId",
         ref: "addressSchema"
     },
-    isDeleted:Boolean,
+    isDeleted:{
+        type:Boolean,
+        default:false
+    },
     date:{
         type:Date,
         default:Date()

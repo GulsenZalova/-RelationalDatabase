@@ -9,5 +9,5 @@ route.delete("/:id",buyerController.delete)
 route.put("/:id",buyerController.update)
 
 
-
+    
 module.exports=route
