@@ -7,13 +7,30 @@ const buyerController={
         const query=req.query
         const limit=query.limit
         const sorting=query.sort
+        let startDate=query.startDate
+        let endDate=query.endDate
+        // date conditions
+        if(!startDate){
+            startDate=new Date(0)
+        }else{
+            startDate=new Date(startDate)
+        }
+        if(!endDate){
+            endDate=new Date()
+        }else{
+            endDate=new Date(endDate)
+        }
+
         let sort
          if(sorting=="decs"){
              sort=-1
         }else if(sorting=="asc"){
              sort=1
         }
-        buyerSchema.find({isDeleted:false}).limit(limit).sort({buyerName:sort}).populate("buyerAddress").exec((err,docs)=>{
+        buyerSchema.find({isDeleted:false,date:{
+            $gte:startDate,
+            $lte:endDate
+        }}).limit(limit).sort({buyerName:sort}).populate("buyerAddress").exec((err,docs)=>{
             if(!err){
                 res.json(docs)
             }else{

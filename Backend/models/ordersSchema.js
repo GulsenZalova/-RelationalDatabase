@@ -20,7 +20,7 @@ const schema=new Schema({
         required:true
     },
     buyerID:{
-        type:String,
+        type:"ObjectId",
         ref:"buyerSchema"
     },
     isDeleted:Boolean,

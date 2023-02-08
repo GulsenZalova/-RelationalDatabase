@@ -5,13 +5,28 @@ const adressController={
        const query=req.query
        const limit=query.limit
        const sorting=query.sort
+       let startDate=query.startDate
+       let endDate=query.endDate
        let sort
+       if(!startDate){
+        startDate=new Date(0)
+    }else{
+        startDate=new Date(startDate)
+    }
+    if(!endDate){
+        endDate=new Date()
+    }else{
+        endDate=new Date(endDate)
+    }
         if(sorting=="decs"){
             sort=-1
        }else if(sorting=="asc"){
             sort=1
        }
-        addressSchema.find({isDeleted:false}).limit(limit).sort({streetName:sort}).exec((err,docs)=>{
+        addressSchema.find({isDeleted:false,date:{
+            $gte:startDate,
+            $lte:endDate
+        }}).limit(limit).sort({streetName:sort}).exec((err,docs)=>{
             if(!err){
                 res.json(docs)
             }else{
