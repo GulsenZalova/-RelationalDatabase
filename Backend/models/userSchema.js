@@ -11,7 +11,10 @@ const schema=new Schema({
         type:String,
         required:true
     },
-    isDeleted:Boolean,
+    isDeleted:{
+        type:Boolean,
+        default:false
+    },
     date:{
         type:Date,
         default:Date()

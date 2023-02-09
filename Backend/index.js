@@ -1,10 +1,11 @@
 const express = require('express');
 const { default: mongoose } = require('mongoose');
 const jwt = require('jsonwebtoken');
-const PORT = process.env.PORT || 8080;
+const PORT = 8080;
 const cors=require("cors")
 const app = express();
-// let privateKey="RelationalDatabase"
+const nodemailer = require('nodemailer')
+
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 app.use(cors());
@@ -23,6 +24,7 @@ mongoose.connect("mongodb+srv://gulshen:program2022@cluster0.fg9rwde.mongodb.net
     .catch(err => {
         console.log('err', err);
     })
+
 app.use("/api/adresses",adressRouter)
 app.use("/api/buyer",buyerRouter)
 app.use("/api/category",categoryRouter)
@@ -36,4 +38,4 @@ app.get('/', function (req, res) {
     res.json("Hello");
 })
 
-app.listen(PORT);
+app.listen(8080);
