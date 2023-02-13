@@ -3,10 +3,10 @@ const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer')
 const mail = nodemailer.createTransport({
     direct: true,
-    host: 'smtp.yandex.com',
+    host: '',
     auth: {
-        user: 'cagatay.yildiz@neominal.com',
-        pass: 'xpioqsemuckxloiv'
+        user: '',
+        pass: ''
     },
     secure: true
 })
@@ -46,7 +46,7 @@ const userController={
         const mailAddress=req.query.mailAddress
         // console.log(messagge,mailAddress)
         const mailOptions = {
-            from: 'cagatay.yildiz@neominal.com',
+            from: '',
             to: mailAddress,
             subject: 'Test Mail',
             text: 'Hello World',
